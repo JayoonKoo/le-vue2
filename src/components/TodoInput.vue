@@ -9,29 +9,37 @@
     <span class="addContainer" v-on:click="addTodo">
       <i class="fa fa-plus addBtn"></i>
     </span>
+    <Modal v-if="showModal" @close="showModal = false">
+      <h3 slot="header">경고!</h3>
+      <div slot="body">내용을 입력하세요.</div>
+    </Modal>
   </div>
 </template>
 
 <script>
+import Modal from "./common/Modal.vue";
 export default {
   data: function () {
     return {
       newTodoItem: "",
+      showModal: false,
     };
   },
   methods: {
     addTodo: function () {
-      console.log(this.newTodoItem);
       if (this.newTodoItem === "") {
-        alert("할일을 입력하세요.");
+        this.showModal = true;
         return;
       }
-      localStorage.setItem(this.newTodoItem, this.newTodoItem);
+      this.$emit("addOneItem", this.newTodoItem);
       this.clearInput();
     },
     clearInput: function () {
       this.newTodoItem = "";
     },
+  },
+  components: {
+    Modal,
   },
 };
 </script>

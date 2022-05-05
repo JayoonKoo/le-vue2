@@ -2,12 +2,17 @@
   <div>
     <ul>
       <li
-        v-for="(todoItem, index) in todoItems"
-        v-bind:key="todoItem"
+        v-for="({ compeleted, item }, index) in todoItems"
+        v-bind:key="item"
         class="shadow"
       >
-        {{ todoItem }}
-        <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
+        <i
+          class="fa fa-check checkBtn"
+          v-on:click="toggleComplete(index)"
+          v-bind:class="{ checkBtnCompleted: compeleted }"
+        ></i>
+        <span v-bind:class="{ textCompleted: compeleted }">{{ item }}</span>
+        <span class="removeBtn" v-on:click="removeTodo(item, index)">
           <i class="fa fa-trash"></i>
         </span>
       </li>
@@ -17,26 +22,16 @@
 
 <script>
 export default {
-  data: function () {
-    return {
-      todoItems: [],
-    };
+  props: {
+    todoItems: Array,
+    removeTodo: Function,
+    toggleComplete: Function,
   },
-  methods: {
-    removeTodo: function (todoItem, index) {
-      localStorage.removeItem(todoItem);
-      this.todoItems.splice(index, 1);
-    },
-  },
-  created: function () {
-    for (let i = 0; i < localStorage.length; i++) {
-      this.todoItems.push(localStorage.key(i));
-    }
-  },
+  created: function () {},
 };
 </script>
 
-<style>
+<style scoped>
 ul {
   list-style-type: none;
   padding-left: 0px;
