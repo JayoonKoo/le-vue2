@@ -14,12 +14,12 @@ import TodoInput from "./components/TodoInput.vue";
 import TodoList from "./components/TodoList.vue";
 
 export default {
-  data: function () {
+  data() {
     return {
       todoItems: [],
     };
   },
-  created: function () {
+  created() {
     for (let i = 0; i < localStorage.length; i++) {
       const savedTodo = getLocalStorageByIndex(i);
       this.todoItems.push(savedTodo);
@@ -32,20 +32,20 @@ export default {
     TodoList,
   },
   methods: {
-    removeTodo: function (todoItem, index) {
+    removeTodo(todoItem, index) {
       localStorage.removeItem(todoItem);
       this.todoItems.splice(index, 1);
     },
-    toggleComplete: function (index) {
+    toggleComplete(index) {
       toggleLocalStorageByIndex(index);
       this.todoItems[index].compeleted = !this.todoItems[index].compeleted;
     },
-    addItem: function (todo) {
+    addItem(todo) {
       const addTodo = { compeleted: false, item: todo };
       localStorage.setItem(todo, JSON.stringify(addTodo));
       this.todoItems.push(addTodo);
     },
-    removeAll: function () {
+    removeAll() {
       this.todoItems = [];
     },
   },

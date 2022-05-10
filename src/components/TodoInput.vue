@@ -19,22 +19,22 @@
 <script>
 import Modal from "./common/Modal.vue";
 export default {
-  data: function () {
+  data() {
     return {
       newTodoItem: "",
       showModal: false,
     };
   },
   methods: {
-    addTodo: function () {
-      if (this.newTodoItem === "") {
+    addTodo() {
+      if (this.newTodoItem.trim() === "") {
         this.showModal = true;
         return;
       }
       this.$emit("addOneItem", this.newTodoItem);
       this.clearInput();
     },
-    clearInput: function () {
+    clearInput() {
       this.newTodoItem = "";
     },
   },

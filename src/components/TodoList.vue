@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul>
+    <transition-group name="list" tag="ul">
       <li
         v-for="({ compeleted, item }, index) in todoItems"
         v-bind:key="item"
@@ -16,7 +16,7 @@
           <i class="fa fa-trash"></i>
         </span>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -27,7 +27,6 @@ export default {
     removeTodo: Function,
     toggleComplete: Function,
   },
-  created: function () {},
 };
 </script>
 
@@ -64,5 +63,19 @@ li {
   cursor: pointer;
   margin-left: auto;
   color: #de4343;
+}
+
+/* List */
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>
